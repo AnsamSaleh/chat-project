@@ -1,0 +1,13 @@
+.message{
+  background-color: #f6f8fa;
+  margin-bottom: 10px;
+}
+.message .user{
+  color: #fff;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+}
+.message .content{
+  padding: 5px 15px;
+}

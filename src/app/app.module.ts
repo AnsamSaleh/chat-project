@@ -16,6 +16,7 @@ import { UserListComponent } from './chat-room/user-list/user-list.component';
 import { FeedComponent } from './chat-room/feed/feed.component';
 import { MessageComponent } from './chat-room/message/message.component';
 import { UserItemComponent } from './chat-room/user-item/user-item.component';
+import { ChatFormComponent } from './chat-room/chat-form/chat-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserItemComponent } from './chat-room/user-item/user-item.component';
     UserListComponent,
     FeedComponent,
     MessageComponent,
-    UserItemComponent
+    UserItemComponent,
+    ChatFormComponent
   ],
   imports: [
     BrowserModule,

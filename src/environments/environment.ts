@@ -9,7 +9,7 @@ export const environment = {
     authDomain: 'angular-chat-f152b.firebaseapp.com',
     databaseURL: 'https://angular-chat-f152b.firebaseio.com',
     projectId: 'angular-chat-f152b',
-    storageBucket: '',
+    storageBucket: 'angular-chat-f152b.appspot.com',
     messagingSenderId: '966750854112'
   }
 };

@@ -1,0 +1,18 @@
+.form-control{
+  border-right: none;
+}
+.button-icon{
+  border: 1px solid #ced4da;
+  background: none;
+  border-right: none;
+  border-left: none;
+  padding: .375rem .75rem;
+  color: #ced4da;
+  cursor: pointer;
+}
+.button-icon:hover{
+  color: #6c757d
+}
+label.button-icon{
+  margin-bottom: 0;
+}
