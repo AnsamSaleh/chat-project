@@ -3,13 +3,13 @@
     <input type="text" class="form-control" required placeholder="Write Message"
            name="msg" [(ngModel)]="message" #msg="ngModel" aria-describedby="send-message">
     <div class="input-group-append">
-      <label class="button-icon">
+      <label class="button-icon bg-white">
         <i class="far fa-smile"></i>
       </label>
-      <label class="button-icon">
+      <label class="button-icon bg-white">
         <i class="far fa-file-image"></i> <input type="file" style="display: none;">
       </label>
-      <button [disabled]="f.invalid" class="btn btn-outline-secondary" type="submit" id="send-message"
+      <button [disabled]="f.invalid" class="btn btn-outline-secondary bg-white" type="submit" id="send-message"
       (click)="send()">
         Send
       </button>

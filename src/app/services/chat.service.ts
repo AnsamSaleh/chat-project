@@ -10,30 +10,33 @@ import {ChatMessage} from '../models/chat-message';
   providedIn: 'root'
 })
 export class ChatService {
-  user: any;
+  user: firebase.User;
   chatMessage: ChatMessage;
   chatMessages: AngularFireList<ChatMessage[]>;
-  userName: Observable<string>;
+  userName: string;
 
   constructor(private auth: AuthService, private afAuth: AngularFireAuth, private db: AngularFireDatabase) {
     this.afAuth.authState.subscribe(dbUser => {
       if (dbUser !== undefined && dbUser !== null) {
         this.user = dbUser;
+        this.userName = this.user.displayName;
       }
     });
   }
 
+  getUsers(): Observable<any[]> {
+    return this.db.list('users').valueChanges();
+  }
+
   sendMessage(msg: string) {
     const time = this.getTimeStamp();
-    //const email = this.user.email;
+    const email = this.user.email;
     this.chatMessages = this.db.list('messages');
     this.chatMessage = {
       message: msg,
       timeSent: time,
-      //userName: this.userName,
-      //email: email
-      userName: 'Ansam',
-      email: 'ansam_saleh_95@hotmail.com'
+      userName: this.userName,
+      email: email
     };
     this.chatMessages.push(this.chatMessage);
     console.log('send message!');
@@ -48,5 +51,6 @@ export class ChatService {
 
   getMessages(): Observable<ChatMessage[]> {
    return this.db.list('messages').valueChanges();
-}
+  }
+
 }

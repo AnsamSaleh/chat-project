@@ -1,4 +1,4 @@
-<h1 class="mb-4">Hello User</h1>
+<p *ngFor="let user of users | async">{{user | json }}</p>
 <div *ngFor="let message of feed | async">
   <app-message [chatMessage]= message></app-message>
 </div>

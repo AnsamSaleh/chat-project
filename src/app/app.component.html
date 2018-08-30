@@ -6,18 +6,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav text-uppercase ml-auto">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!id">
           <a class="nav-link js-scroll-trigger" [routerLink]="['/login']">Log In</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!id">
           <a class="nav-link js-scroll-trigger" [routerLink]="['/signup']">Sign Up</a>
+        </li>
+        <li class="nav-item" *ngIf="id">
+          <a class="nav-link js-scroll-trigger" *ngFor="let user of users | async" [routerLink]="['/']">{{user | json }}</a>
+        </li>
+        <li class="nav-item" *ngIf="id">
+          <a class="nav-link js-scroll-trigger" (click)="logout()" >Log Out</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-
+<p *ngFor="let user of users | async">{{user | json }}</p>
   <div class="container pt-5">
     <router-outlet></router-outlet>
   </div>

@@ -1,3 +1,44 @@
-<p>
-  log-in works!
-</p>
+<form #form="ngForm" (ngSubmit)="login()">
+  <div class="form-group">
+    <label>Email</label>
+    <input
+      type="text"
+      name="mail"
+      class="form-control"
+      [ngClass]="{
+          'is-invalid': mail.invalid && (mail.dirty || mail.touched),
+          'is-valid': mail.valid && mail.dirty
+        }"
+      [(ngModel)]="email"
+      required
+      pattern="[^ @]*@[^ @]*"
+      #mail="ngModel"
+    >
+    <div class="invalid-feedback" *ngIf="mail.invalid && (mail.dirty || mail.touched)">
+      <div *ngIf="mail.errors.required" >
+        Email is required
+      </div>
+      <div *ngIf="mail.errors.pattern" >
+        Invalid Email
+      </div>
+    </div>
+    <!--<pre>Dirty? {{ email.dirty }}</pre>-->
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input
+      type="password"
+      name="pass"
+      class="form-control"
+      [(ngModel)]="password"
+      required
+      #pass="ngModel"
+    >
+  </div>
+  <div class="mt-4">
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      class="btn btn-primary" (click)="login()">Log In</button>
+  </div>
+</form>
