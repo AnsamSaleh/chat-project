@@ -1,9 +1,6 @@
-<div class="list">
+<div>
   <app-search></app-search>
-  <!--
-  <div *ngFor="let user of users">
-    <app-user-item [item]="user"></app-user-item>
+  <div *ngFor="let use of users | async">
+    <app-user-item [user]=use></app-user-item>
   </div>
-  -->
-  <app-user-item></app-user-item>
 </div>

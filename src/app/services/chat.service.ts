@@ -19,13 +19,9 @@ export class ChatService {
     this.afAuth.authState.subscribe(dbUser => {
       if (dbUser !== undefined && dbUser !== null) {
         this.user = dbUser;
-        this.userName = this.user.displayName;
+    //    this.userName = this.user.displayName;
       }
     });
-  }
-
-  getUsers(): Observable<any[]> {
-    return this.db.list('users').valueChanges();
   }
 
   sendMessage(msg: string) {
@@ -35,7 +31,8 @@ export class ChatService {
     this.chatMessage = {
       message: msg,
       timeSent: time,
-      userName: this.userName,
+     // userName: this.userName,
+      userName: 'Admin',
       email: email
     };
     this.chatMessages.push(this.chatMessage);

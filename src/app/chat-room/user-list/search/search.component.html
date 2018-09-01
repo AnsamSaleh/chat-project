@@ -1,3 +1,27 @@
-<p>
-  search works!
-</p>
+<form #form="ngForm" (ngSubmit)="search()">
+  <div class="form-group">
+    <input
+      type="text"
+      name="mail"
+      class="form-control"
+      placeholder="Email"
+      [ngClass]="{
+          'is-invalid': mail.invalid && (mail.dirty),
+          'is-valid': mail.valid && mail.dirty
+        }"
+      [(ngModel)]="email"
+      required
+      pattern="[^ @]*@[^ @]*"
+      #mail="ngModel"
+    >
+
+  <div class="invalid-feedback" *ngIf="mail.invalid && (mail.dirty)">
+    <div *ngIf="mail.errors.required" >
+      Email is required
+    </div>
+    <div *ngIf="mail.errors.pattern" >
+      Invalid Email
+    </div>
+  </div>
+  </div>
+</form>

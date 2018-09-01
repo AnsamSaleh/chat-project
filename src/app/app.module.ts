@@ -18,6 +18,7 @@ import { MessageComponent } from './chat-room/message/message.component';
 import { UserItemComponent } from './chat-room/user-item/user-item.component';
 import { ChatFormComponent } from './chat-room/chat-form/chat-form.component';
 import {SearchComponent} from './chat-room/user-list/search/search.component';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {SearchComponent} from './chat-room/user-list/search/search.component';
     MessageComponent,
     UserItemComponent,
     ChatFormComponent,
-    SearchComponent
+    SearchComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

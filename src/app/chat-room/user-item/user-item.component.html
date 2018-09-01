@@ -1,3 +1,6 @@
-<p>
-  user-item works!
-</p>
+<h6 class="item">
+  <span [ngClass]="{'on':user.status === 'onLine'}"></span>
+  {{user.userName}}
+  <span [ngClass]="{'badge badge-danger':true}" class="ml-auto">1</span>
+</h6>
+

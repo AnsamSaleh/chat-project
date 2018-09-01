@@ -47,7 +47,7 @@ export class AuthService {
     const path = `uers/${this.userID}`;
     console.log(path);
     const data = {
-      username: username,
+      userName: username,
       email: email,
       status: status
     }
@@ -84,5 +84,16 @@ export class AuthService {
   getUser(): Observable<User[]> {
     const path = `uers/${this.userID}`;
     return this.db.list(path).valueChanges();
+  }
+
+  getName() {
+    const user = this.getUser().toArray();
+    return user.subscribe(x => {
+      console.log('x' + x);
+    });
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.db.list(`uers`).valueChanges();
   }
 }
