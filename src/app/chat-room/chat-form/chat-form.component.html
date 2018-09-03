@@ -1,16 +1,15 @@
-<form #f="ngForm" (ngSubmit)="onSubmit()">
+<form #f="ngForm" (ngSubmit)="onSubmit()" xmlns="" xmlns="">
   <div class="input-group mb-3">
     <input type="text" class="form-control" required placeholder="Write Message"
          name="msg" [(ngModel)]="message" #msg="ngModel" aria-describedby="send-message"
          fileDrop
          (filesDropped)="upload.startUplod($event)"
          (filesHovered)="upload.toggleHover($event)"
-         [class.hovering]="upload.isHovering">
+         [class.hovering]="upload.isHovering"
+         id="emoji">
 
     <div class="input-group-append">
-      <label class="button-icon bg-white">
-        <i class="far fa-smile"></i>
-      </label>
+
       <label class="button-icon bg-white">
         <i class="far fa-file-image"></i> <input type="file" style="display: none;" (change)="detectFiles($event)">
       </label>
@@ -21,6 +20,10 @@
     </div>
   </div>
 <!--
+<label class="button-icon bg-white">
+        <i class="far fa-smile"></i>
+      </label>
+
   <div *ngIf="currentUpload">
     <div class="progress">
       <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
@@ -39,3 +42,4 @@
   </button>
   -->
 </form>
+

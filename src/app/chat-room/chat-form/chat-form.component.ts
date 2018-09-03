@@ -4,6 +4,7 @@ import {ChatService} from '../../services/chat.service';
 import {Upload} from '../../models/upload';
 import {UploadService} from '../../services/upload.service';
 import {AngularFireUploadTask} from 'angularfire2/storage';
+import * from 'jquery';
 
 @Component({
   selector: 'app-chat-form',
@@ -16,9 +17,17 @@ export class ChatFormComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
 
-  constructor(private chat: ChatService, public upload: UploadService) { }
+  constructor(private chat: ChatService, public upload: UploadService) {
 
-  ngOnInit() {}
+  }
+
+  ngOnInit() {
+    $(document).ready(function() {
+      $("#emoji").emojioneArea({
+        pickerPosition: "bottom",
+      });
+    });
+  }
 
   onSubmit() {
     if (this.form.valid) {
