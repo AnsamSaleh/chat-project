@@ -1,6 +1,16 @@
 <div>
-  <app-search></app-search>
-  <div *ngFor="let use of users | async">
-    <app-user-item [user]=use></app-user-item>
+  <app-search (loading)="loading = $event"
+              (results)="updateResults($event)">
+  </app-search>
+  <div *ngIf="!loading">
+    <div *ngFor="let result of results">
+      <app-user-item [user]="result">
+      </app-user-item>
+    </div>
+  </div>
+  <div *ngIf="loading">
+    <div *ngFor="let use of users | async">
+      <app-user-item [user]=use></app-user-item>
+    </div>
   </div>
 </div>

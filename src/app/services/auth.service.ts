@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 import {User} from '../models/user';
 import {ChatMessage} from '../models/chat-message';
+import {debounceTime, find, map, take, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,10 @@ export class AuthService {
   user: firebase.User;
   private authState: any;
   userID: string;
-
+  userName: string;
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private router: Router) {}
 
   logout() {
-   // this.userRef.remove()
-   //   .catch(error => console.log(error));
     const out = this.afAuth.auth.signOut();
     const status = 'offLine';
     this.setUserStatus(status);
@@ -83,17 +82,27 @@ export class AuthService {
 
   getUser(): Observable<User[]> {
     const path = `uers/${this.userID}`;
-    return this.db.list(path).valueChanges();
+    return this.db.list(path).valueChanges()
+      .pipe(
+        map(response => {
+          return <any>response
+            .map(item => {
+              //  console.log("raw item", item); // uncomment if you want to debug
+              return new User(item.email, item.status, item.userName);
+            });
+        })
+      );
   }
-
-  getName() {
-    const user = this.getUser().toArray();
-    return user.subscribe(x => {
-      console.log('x' + x);
-    });
-  }
-
   getUsers(): Observable<User[]> {
-    return this.db.list(`uers`).valueChanges();
+    return this.db.list(`uers`).valueChanges()
+      .pipe(
+        map(response => {
+          return <any>response
+            .map(item => {
+              //  console.log("raw item", item); // uncomment if you want to debug
+              return new User(item.email, item.status, item.userName);
+            });
+        })
+      );
   }
 }

@@ -1,8 +1,9 @@
-import {Component, DoCheck, Input, OnInit} from '@angular/core';
+import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
 import {AuthService} from '../services/auth.service';
 import * as firebase from 'firebase';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
@@ -10,27 +11,40 @@ import * as firebase from 'firebase';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit, DoCheck {
-  user: firebase.User;
+ // user: firebase.User;
   id: string;
-  users: Observable<User[]>;
-  name: string;
+  users: User[];
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.id = this.auth.userID;
-    console.log(this.id);
-    this.users = this.auth.getUser();
+    console.log('id init' + this.id);
+    //this.users = this.auth.getUser();
   }
   ngDoCheck() {
     this.id = this.auth.userID;
-    console.log(this.id);
-    this.users = this.auth.getUser();
-    this.auth.getName();
+    console.log('id change' + this.id);
+/*
+    this.auth.getUser()
+      .subscribe(
+        (results: User[]) => {
+        //  console.log('results ', results);
+          this.users = results;
+        },
+        (err: any) => { // on error
+          console.log(err);
+        }
+      );
+*/
   }
 
   logout() {
     this.auth.logout();
+  }
+  getUser(users: User[]): void {
+    setTimeout(this.users = users ,4000);
+    console.log('ansam'+ users[0].userName);
   }
 
 }

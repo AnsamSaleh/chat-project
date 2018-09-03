@@ -1,6 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Observable, range} from 'rxjs';
 import {ChatService} from '../../services/chat.service';
+import {Upload} from '../../models/upload';
+import {UploadService} from '../../services/upload.service';
+import {AngularFireUploadTask} from 'angularfire2/storage';
 
 @Component({
   selector: 'app-chat-form',
@@ -8,24 +11,35 @@ import {ChatService} from '../../services/chat.service';
   styleUrls: ['./chat-form.component.css']
 })
 export class ChatFormComponent implements OnInit {
-  message : string;
+  message: string;
   @ViewChild('f') form: any;
-  constructor(private el: ElementRef, private chat: ChatService) { }
+  selectedFiles: FileList;
+  currentUpload: Upload;
 
-  ngOnInit() {
-    fromEvent(this.el.nativeElement, 'keyup')
+  constructor(private chat: ChatService, public upload: UploadService) { }
 
+  ngOnInit() {}
 
-  }
   onSubmit() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       console.log('values ', this.form.value);
       this.form.reset();
-
     }
   }
   send() {
-    this.chat.sendMessage(this.message);
+    if (this.message === '') {
+      this.chat.sendMessage(this.message);
+    } else {
+      this.uploadSingle();
+    }
   }
 
+  detectFiles(event) {
+    this.selectedFiles = event.target.files;
+  }
+  uploadSingle() {
+    let file = this.selectedFiles.item(0);
+    this.currentUpload = new Upload(file);
+    this.upload.pushUpload(this.currentUpload);
+  }
 }

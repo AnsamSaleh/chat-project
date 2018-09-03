@@ -8,16 +8,18 @@ import {AuthService} from '../../services/auth.service';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit, OnChanges {
+export class UserListComponent implements OnInit {
   users: Observable<User[]>;
+  results: User[];
+  loading = true;
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.users = this.auth.getUsers();
   }
-  ngOnChanges() {
-    this.users = this.auth.getUsers();
+  updateResults(results: User[]): void {
+    setTimeout(this.results = results ,4000);
   }
 
 }

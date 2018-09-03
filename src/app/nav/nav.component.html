@@ -14,7 +14,7 @@
           <a class="nav-link js-scroll-trigger" [routerLink]="['/signup']">Sign Up</a>
         </li>
         <li class="nav-item" *ngIf="id">
-          <a class="nav-link js-scroll-trigger" [routerLink]="['/']">{{users |json }}</a>
+          <a class="nav-link js-scroll-trigger" *ngFor="let user of users" [routerLink]="['/']">{{user.userName }}</a>
         </li>
         <li class="nav-item" *ngIf="id">
           <a class="nav-link js-scroll-trigger" (click)="logout()" >Log Out</a>
@@ -23,7 +23,5 @@
     </div>
   </div>
 </nav>
+<app-log-in (users)="getUser($event)" hidden></app-log-in>
 
-<div *ngFor="let use of users | async">
-  <p>{{use | json}}</p>
-</div>
