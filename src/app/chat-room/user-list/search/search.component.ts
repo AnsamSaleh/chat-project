@@ -12,6 +12,7 @@ import {AuthService} from '../../../services/auth.service';
 export class SearchComponent implements OnInit {
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() results: EventEmitter<User[]> = new EventEmitter<User[]>();
+  @Output() name: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private auth: AuthService, private el: ElementRef) { }
 
@@ -22,7 +23,8 @@ export class SearchComponent implements OnInit {
         filter((text: string) => text.length > 1),
         debounceTime(250),
         tap(() => this.loading.emit(true)),
-        map((name: string) => this.auth.getUsers()),
+        tap((text: string) => this.name.emit(text)),
+        map(() => this.auth.getUsers()),
         switchAll()
       ).subscribe(
       (results: User[]) => {

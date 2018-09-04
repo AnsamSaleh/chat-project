@@ -12,6 +12,7 @@ export class UserListComponent implements OnInit {
   users: Observable<User[]>;
   results: User[];
   loading = true;
+  name: string;
 
   constructor(private auth: AuthService) { }
 
@@ -19,7 +20,7 @@ export class UserListComponent implements OnInit {
     this.users = this.auth.getUsers();
   }
   updateResults(results: User[]): void {
-    setTimeout(this.results = results ,4000);
+    this.results = results;
   }
 
 }

@@ -16,4 +16,14 @@
 label.button-icon{
   margin-bottom: 0;
 }
-
+.emoji{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 0;
+  width: 80%;
+  height: 50px;
+  margin-bottom: 0;
+}
+.input-group-append {
+  margin-left: -1px;
+  height: 34px;
+}

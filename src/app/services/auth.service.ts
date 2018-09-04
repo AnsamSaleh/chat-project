@@ -13,9 +13,10 @@ import {debounceTime, find, map, take, tap} from 'rxjs/operators';
 })
 export class AuthService {
   user: firebase.User;
-  private authState: any;
+  authState: any;
   userID: string;
-  userName: string;
+  userEmail: string;
+
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private router: Router) {}
 
   logout() {
@@ -27,29 +28,31 @@ export class AuthService {
   }
 
 
-  signUp(username: string, email: string, password: string) {
+  signUp(imageSrc: string, username: string, email: string, password: string) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then ( user => {
-        console.log(username, email, password);
+        console.log(imageSrc, username, email, password);
         this.authState = user;
         console.log(this.authState);
         const status = 'onLine';
+        this.userEmail = email;
         this.userID = this.authState.user.uid;
-        this.setUserData(username, email, status);
+        this.setUserData(imageSrc, username, email, status);
         this.router.navigate(['/chat']);
       }).catch(err => {
       console.log(err);
       this.router.navigate(['/signup']);
     });
   }
-  setUserData(username: string, email: string, status: string) {
+  setUserData(imageSrc: string, username: string, email: string, status: string) {
     const path = `uers/${this.userID}`;
     console.log(path);
     const data = {
+      imageSrc: imageSrc,
       userName: username,
       email: email,
       status: status
-    }
+    };
     this.db.object(path).update(data)
       .catch(error => console.log(error));
   }
@@ -59,8 +62,9 @@ export class AuthService {
       .then ( resolve => {
         console.log(email, password);
         this.authState = resolve;
-        this.userID = resolve.user.uid;
+        this.userID = this.authState.user.uid;
         const status = 'onLine';
+        this.userEmail = email;
         console.log(resolve);
         console.log(this.userID);
         this.setUserStatus(status);
@@ -79,16 +83,24 @@ export class AuthService {
     this.db.object(path).update(data)
       .catch(error => console.log(error));
   }
+  uploadImage(imageSrc: string) {
+    const path = `uers/${this.userID}`;
+    const data = {
+      imageSrc: imageSrc
+    }
+    this.db.object(path).update(data)
+      .catch(error => console.log(error));
+  }
 
   getUser(): Observable<User[]> {
     const path = `uers/${this.userID}`;
     return this.db.list(path).valueChanges()
-      .pipe(
+    .pipe(
         map(response => {
           return <any>response
             .map(item => {
               //  console.log("raw item", item); // uncomment if you want to debug
-              return new User(item.email, item.status, item.userName);
+              return new User(item.imageSrc, item.email, item.status, item.userName);
             });
         })
       );
@@ -100,7 +112,7 @@ export class AuthService {
           return <any>response
             .map(item => {
               //  console.log("raw item", item); // uncomment if you want to debug
-              return new User(item.email, item.status, item.userName);
+              return new User(item.imageSrc, item.email, item.status, item.userName);
             });
         })
       );

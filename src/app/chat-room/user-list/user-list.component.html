@@ -1,11 +1,16 @@
 <div>
   <app-search (loading)="loading = $event"
-              (results)="updateResults($event)">
+              (results)="updateResults($event)"
+              (name)="name = $vent">
   </app-search>
+  <div *ngIf="loading">
+    loading ...
+  </div>
   <div *ngIf="!loading">
     <div *ngFor="let result of results">
-      <app-user-item [user]="result">
-      </app-user-item>
+      <div *ngIf="result.userName === name">
+        <app-user-item [user]="result"></app-user-item>
+      </div>
     </div>
   </div>
   <div *ngIf="loading">

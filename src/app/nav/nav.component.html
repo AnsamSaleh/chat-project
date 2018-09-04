@@ -14,7 +14,7 @@
           <a class="nav-link js-scroll-trigger" [routerLink]="['/signup']">Sign Up</a>
         </li>
         <li class="nav-item" *ngIf="id">
-          <a class="nav-link js-scroll-trigger" *ngFor="let user of users" [routerLink]="['/']">{{user.userName }}</a>
+          <a class="nav-link js-scroll-trigger" [routerLink]="['/']">{{email }}</a>
         </li>
         <li class="nav-item" *ngIf="id">
           <a class="nav-link js-scroll-trigger" (click)="logout()" >Log Out</a>

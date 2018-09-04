@@ -1,5 +1,23 @@
 <form #form="ngForm" (ngSubmit)="signUp()">
   <div class="form-group">
+    <label class="mb-3 cropped">
+      <i class="fas fa-cloud-upload-alt"></i>
+      Select Image
+      <input _ngcontent-c4="" class="mb-3" type="file" style="display: none;" (change)="fileChangeEvent($event)" required>
+    </label>
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 3"
+      [resizeToWidth]="128"
+      format="png"
+      (imageCroppedBase64)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (loadImageFailed)="loadImageFailed()">
+    </image-cropper>
+    <img [src]="croppedImage" />
+  </div>
+  <div class="form-group">
     <label>User Name</label>
     <input
       type="text"

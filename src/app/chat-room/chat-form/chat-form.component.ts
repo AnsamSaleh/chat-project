@@ -23,8 +23,9 @@ export class ChatFormComponent implements OnInit {
 
   ngOnInit() {
     $(document).ready(function() {
-      $("#emoji").emojioneArea({
+      $('#emoji').emojioneArea({
         pickerPosition: "bottom",
+        inline: true
       });
     });
   }

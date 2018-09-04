@@ -13,17 +13,20 @@ import {take} from 'rxjs/operators';
 export class NavComponent implements OnInit, DoCheck {
  // user: firebase.User;
   id: string;
+  email: string;
   users: User[];
 
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.id = this.auth.userID;
+    this.email = this.auth.userEmail;
     console.log('id init' + this.id);
     //this.users = this.auth.getUser();
   }
   ngDoCheck() {
     this.id = this.auth.userID;
+    this.email = this.auth.userEmail;
     console.log('id change' + this.id);
 /*
     this.auth.getUser()

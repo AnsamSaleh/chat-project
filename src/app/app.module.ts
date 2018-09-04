@@ -20,6 +20,12 @@ import { ChatFormComponent } from './chat-room/chat-form/chat-form.component';
 import {SearchComponent} from './chat-room/user-list/search/search.component';
 import { NavComponent } from './nav/nav.component';
 import { FileDropDirective } from './directive/file-drop.directive';
+import { ProfileComponent } from './profile/profile.component';
+import {ImageCropperModule} from 'ngx-image-cropper';
+import { PopupComponent } from './popup/popup.component';
+import { InnerPopupComponent } from './inner-popup/inner-popup.component';
+import { ClosePageDirective } from './directive/close-page.directive';
+import { StopPropagationDirective } from './directive/stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,11 @@ import { FileDropDirective } from './directive/file-drop.directive';
     SearchComponent,
     NavComponent,
     FileDropDirective,
+    ProfileComponent,
+    PopupComponent,
+    InnerPopupComponent,
+    ClosePageDirective,
+    StopPropagationDirective,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +53,8 @@ import { FileDropDirective } from './directive/file-drop.directive';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    ImageCropperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

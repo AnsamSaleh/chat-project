@@ -1,9 +1,12 @@
 <div class="container">
+  <div *ngFor="let item of user | async">
+   <app-profile [user]="item"></app-profile>
+  </div>
   <div class="row">
-    <div class="col-3 pt-4 list">
+    <div class="col-md-3 pt-4 list">
       <app-user-list></app-user-list>
     </div>
-    <div class="col-9">
+    <div class="col-md-9">
       <div class="mb-4 #scroller feed">
         <app-feed></app-feed>
       </div>

@@ -1,0 +1,41 @@
+<div *ngIf="auth.userEmail == user.email">
+
+<h1>
+  <img [src]="user.imageSrc" class="img"/>
+  <a data-toggle="modal" (click)="openPop()" class="mb-3">
+    {{user.userName}}
+  </a>
+
+</h1>
+</div>
+<app-popup *ngIf="visible"  appClosePage>
+  <app-inner-popup appStopPropagation>
+    <div class="display_popup">
+      <button class="btn close" (click)="closePop()"><i class="fas fa-times"></i></button>
+      <label class="mb-3">
+        <i class="fas fa-cloud-upload-alt"></i>
+        Select Image
+        <input _ngcontent-c4="" class="mb-3" type="file" style="display: none;" (change)="fileChangeEvent($event)">
+      </label>
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 3"
+        [resizeToWidth]="128"
+        format="png"
+        (imageCroppedBase64)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+      <img [src]="croppedImage" />
+      <div class="form-group">
+        <button (click)="imageLoaded()" class="btn btn-primary form-control mt-3">save</button>
+      </div>
+    </div>
+  </app-inner-popup>
+</app-popup>
+
+
+
+
+
