@@ -1,46 +1,22 @@
-<form #f="ngForm" (ngSubmit)="onSubmit()" xmlns="" xmlns="">
+
+<form #f="ngForm" (ngSubmit)="onSubmit()">
   <div class="input-group mb-3">
     <div class="emoji">
-    <input type="text" class="form-control" required placeholder="Write Message"
-         name="msg" [(ngModel)]="message" #msg="ngModel" aria-describedby="send-message"
-         fileDrop
-         (filesDropped)="upload.startUplod($event)"
-         (filesHovered)="upload.toggleHover($event)"
-         [class.hovering]="upload.isHovering"
-         id="emoji">
+      <input type="text" class="form-control" placeholder="Write Message"
+           aria-describedby="send-message"
+           name="msg" [(ngModel)]="message" #msg="ngModel"
+           id="emoji" (keyup.enter)="send()">
     </div>
-    <div class="input-group-append">
 
+    <div class="input-group-append">
       <label class="button-icon bg-white">
-        <i class="far fa-file-image"></i> <input type="file" style="display: none;" (change)="detectFiles($event)">
+        <i class="far fa-file-image"></i> <input type="file" name="file" #file="ngModel" [(ngModel)]="fileURL" style="display: none;" (change)="uploadFile()">
       </label>
-      <button class="btn btn-outline-secondary" type="submit" id="send-message"
+      <button [disabled]="false" class="btn btn-outline-secondary" type="submit" id="send-message"
       (click)="send()">
         Send
       </button>
     </div>
+
   </div>
-<!--
-<label class="button-icon bg-white">
-        <i class="far fa-smile"></i>
-      </label>
-
-  <div *ngIf="currentUpload">
-    <div class="progress">
-      <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
-    </div>
-    Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
-  </div>
-  <label>
-    <input type="file" (change)="detectFiles($event)">
-  </label>
-
-  <button
-    [disabled]="!selectedFiles"
-    (click)="uploadSingle()">
-
-    Upload Multiple
-  </button>
-  -->
 </form>
-

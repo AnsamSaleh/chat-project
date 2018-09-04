@@ -1,10 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {fromEvent, Observable, range} from 'rxjs';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ChatService} from '../../services/chat.service';
-import {Upload} from '../../models/upload';
-import {UploadService} from '../../services/upload.service';
-import {AngularFireUploadTask} from 'angularfire2/storage';
 import * from 'jquery';
+import {User} from '../../models/user';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-chat-form',
@@ -12,44 +10,38 @@ import * from 'jquery';
   styleUrls: ['./chat-form.component.css']
 })
 export class ChatFormComponent implements OnInit {
-  message: string;
+  message = '';
   @ViewChild('f') form: any;
-  selectedFiles: FileList;
-  currentUpload: Upload;
+  fileURL: string;
+  hidden = true;
 
-  constructor(private chat: ChatService, public upload: UploadService) {
-
-  }
+  constructor(private chat: ChatService, public auth: AuthService) {}
 
   ngOnInit() {
     $(document).ready(function() {
-      $('#emoji').emojioneArea({
-        pickerPosition: "bottom",
-        inline: true
-      });
-    });
-  }
+      $("#emoji").emojioneArea({
+        pickerPosition: "top",
+        tonesStyle: "bullet",
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log('values ', this.form.value);
-      this.form.reset();
+      });
     }
   }
+  onSubmit() {}
+
   send() {
-    if (this.message === '') {
+    const x = $('#emoji').val();
+    this.message = x;
+    //console.log('n mmmmm'  + this.message);
+    if (this.message !== '') {
       this.chat.sendMessage(this.message);
     } else {
-      this.uploadSingle();
+      this.uploadFile();
     }
+    this.form.reset();
+    $('#emoji').val('');
   }
 
-  detectFiles(event) {
-    this.selectedFiles = event.target.files;
-  }
-  uploadSingle() {
-    let file = this.selectedFiles.item(0);
-    this.currentUpload = new Upload(file);
-    this.upload.pushUpload(this.currentUpload);
+  uploadFile() {
+    this.chat.uploadFile(this.fileURL);
   }
 }

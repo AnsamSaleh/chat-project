@@ -2,10 +2,21 @@
   <div class="container">
     <div class="row">
       <div class="col-3 user">
-        <h4 class="align-self-center">{{chatMessage.userName}}</h4>
+        <h4 class="align-self-center">{{chatMessage.email}}</h4>
       </div>
       <div class="col-9 content">
-        <p>{{chatMessage.message}}</p>
+        <p *ngIf="chatMessage.message !== ''">{{chatMessage.message}}</p>
+        <div *ngIf="chatMessage.file !== ''">
+          <p *ngIf="chatMessage.file.slice(-3) === 'pdf'>
+            <embed type="application/pdf" src={{chatMessage.file}} width="60%" height="200"
+                   alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
+                   background-color="0xFF525659" top-toolbar-height="56" full-frame=""
+                   internalinstanceid="20" title="CHROME">
+          </p>
+          <p *ngIf="">
+            <img src={{chatMessage.file}}>
+          </p>
+          </div>
         <small>{{chatMessage.timeSent}}</small>
       </div>
     </div>

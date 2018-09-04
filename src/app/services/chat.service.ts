@@ -30,9 +30,8 @@ export class ChatService {
     this.chatMessages = this.db.list('messages');
     this.chatMessage = {
       message: msg,
+      file: '',
       timeSent: time,
-     // userName: this.userName,
-      userName: 'Admin',
       email: email
     };
     this.chatMessages.push(this.chatMessage);
@@ -48,6 +47,20 @@ export class ChatService {
 
   getMessages(): Observable<ChatMessage[]> {
    return this.db.list('messages').valueChanges();
+  }
+
+  uploadFile(url: string) {
+    const time = this.getTimeStamp();
+    const email = this.user.email;
+    this.chatMessages = this.db.list('messages');
+    this.chatMessage = {
+      message: '',
+      file: url,
+      timeSent: time,
+      email: email
+    };
+    this.chatMessages.push(this.chatMessage);
+    console.log('send message!');
   }
 
 }
