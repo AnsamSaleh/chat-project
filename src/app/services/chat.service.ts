@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {AuthService} from './auth.service';
 import {ChatMessage} from '../models/chat-message';
+import {st} from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class ChatService {
     });
   }
 
-  sendMessage(msg: string) {
+  sendMessage(msg: string, name: string) {
     const time = this.getTimeStamp();
     const email = this.user.email;
     this.chatMessages = this.db.list('messages');
@@ -32,13 +33,14 @@ export class ChatService {
       message: msg,
       file: '',
       timeSent: time,
-      email: email
+      email: email,
+      userName: name
     };
     this.chatMessages.push(this.chatMessage);
     console.log('send message!');
   }
 
-  getTimeStamp():string {
+  getTimeStamp(): string {
     const now = new Date();
     const date = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}` ;
     const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` ;
@@ -49,15 +51,16 @@ export class ChatService {
    return this.db.list('messages').valueChanges();
   }
 
-  uploadFile(url: string) {
+  uploadFile(doc: string, name: string) {
     const time = this.getTimeStamp();
     const email = this.user.email;
     this.chatMessages = this.db.list('messages');
     this.chatMessage = {
       message: '',
-      file: url,
+      file: doc,
       timeSent: time,
-      email: email
+      email: email,
+      userName: name
     };
     this.chatMessages.push(this.chatMessage);
     console.log('send message!');

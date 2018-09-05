@@ -13,6 +13,8 @@ import * from 'jquery';
 export class ChatRoomComponent implements OnInit {
   @ViewChild('scroller') feedContainer: ElementRef;
   user: Observable<User[]>;
+  userName: string;
+
   constructor(private auth: AuthService) { }
 
   ngOnInit() {

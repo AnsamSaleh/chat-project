@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../models/user';
 import {AuthService} from '../services/auth.service';
 import {UploadService} from '../services/upload.service';
@@ -9,14 +9,19 @@ import {UploadService} from '../services/upload.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  @Input()user: User;
+  @Output() userName: EventEmitter<string> = new EventEmitter<string>();
+  @Input() user: User;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   visible = false;
 
   constructor(public auth: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.auth.userEmail === this.user.email) {
+      this.userName.emit(this.user.userName);
+    }
+  }
   openPop() {
     this.visible = !this.visible;
   }

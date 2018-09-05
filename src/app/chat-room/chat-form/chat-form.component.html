@@ -1,22 +1,26 @@
-
-<form #f="ngForm" (ngSubmit)="onSubmit()">
+<form #f="ngForm">
   <div class="input-group mb-3">
     <div class="emoji">
       <input type="text" class="form-control" placeholder="Write Message"
            aria-describedby="send-message"
            name="msg" [(ngModel)]="message" #msg="ngModel"
-           id="emoji" (keyup.enter)="send()">
+           id="emoji" (keyup.enter)="send()" (change)="send()">
     </div>
 
     <div class="input-group-append">
       <label class="button-icon bg-white">
-        <i class="far fa-file-image"></i> <input type="file" name="file" #file="ngModel" [(ngModel)]="fileURL" style="display: none;" (change)="uploadFile()">
+        <i class="far fa-file-image"></i>
+        <input type="file" name="file" #file="ngModel" [(ngModel)]="fileURL" style="display: none;"
+               (change)="uploadFile($event)" accept=".png,.jpg,.pdf">
       </label>
       <button [disabled]="false" class="btn btn-outline-secondary" type="submit" id="send-message"
       (click)="send()">
         Send
       </button>
     </div>
-
+  <!--  <div *ngIf="upload.downloadURL | async; let downloadSrc" class="alert alert-info" role="alert">
+      File uploaded: <a [href]="downloadSrc">{{downloadSrc}}</a>
+    </div> -->
+    <p>{{upload.downloadURL | async}}</p>
   </div>
 </form>

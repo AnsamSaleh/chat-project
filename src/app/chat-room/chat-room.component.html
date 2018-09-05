@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngFor="let item of user | async">
-   <app-profile [user]="item"></app-profile>
+   <app-profile [user]="item" (userName)="userName= $event"></app-profile>
   </div>
   <div class="row">
     <div class="col-md-3 pt-4 list">
@@ -10,7 +10,7 @@
       <div class="mb-4 #scroller feed">
         <app-feed></app-feed>
       </div>
-      <app-chat-form></app-chat-form>
+      <app-chat-form [userName]="userName"></app-chat-form>
     </div>
   </div>
 </div>
