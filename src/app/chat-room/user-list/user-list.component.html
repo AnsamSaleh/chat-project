@@ -1,7 +1,7 @@
 <div>
   <app-search (loading)="loading = $event"
               (results)="updateResults($event)"
-              (name)="name = $vent">
+              (name)="name = $event">
   </app-search>
   <div *ngIf="loading">
     loading ...

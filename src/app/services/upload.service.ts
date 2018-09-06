@@ -4,6 +4,7 @@ import {Upload} from '../models/upload';
 import * as firebase from 'firebase';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from 'angularfire2/storage';
 import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class UploadService {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   uploadProgress: Observable<number>;
-  downloadURL: Observable<string>;
+  downloadURL: string;
 
   constructor(private afStorage: AngularFireStorage) {}
 
@@ -25,11 +26,12 @@ export class UploadService {
     this.ref = this.afStorage.ref(id);
     this.task = this.ref.put(event.target.files[0]);
     this.uploadProgress = this.task.percentageChanges();
-  //  this.downloadURL = this.ref.getDownloadURL();
     this.task.snapshotChanges().pipe(
       finalize(() => {
         this.ref.getDownloadURL().subscribe(url => {
-          console.log(url); // <-- do what ever you want with the url..
+        //  console.log(url); // <-- do what ever you want with the url..
+          this.downloadURL = url;
+          console.log(this.downloadURL);
         });
       })
     ).subscribe();

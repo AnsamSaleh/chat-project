@@ -1,5 +1,7 @@
 <div>
   <div class="form-group">
-    <input name="search" type="text" class="form-control" placeholder="Search" >
+    <input name="newquery" type="text" class="form-control" placeholder="Search"
+           [(ngModel)]="query" #newquery="ngModel"
+           (keydown.enter)="submit()">
   </div>
 </div>

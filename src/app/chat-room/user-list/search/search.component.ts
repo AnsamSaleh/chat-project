@@ -3,6 +3,7 @@ import {fromEvent, Observable} from 'rxjs';
 import {User} from '../../../models/user';
 import {debounceTime, filter, map, switchAll, tap} from 'rxjs/operators';
 import {AuthService} from '../../../services/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -13,33 +14,41 @@ export class SearchComponent implements OnInit {
   @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() results: EventEmitter<User[]> = new EventEmitter<User[]>();
   @Output() name: EventEmitter<string> = new EventEmitter<string>();
+  query: string;
 
-  constructor(private auth: AuthService, private el: ElementRef) { }
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
+    /*
+    this.route.queryParams
+      .subscribe((params: any) => {
+        this.query = params['query'] || '';
+      });
+      */
+  }
 
-  ngOnInit() {
-    fromEvent(this.el.nativeElement, 'keyup')
-      .pipe(
-        map((e: any) => e.target.value),//e=intered value
-        filter((text: string) => text.length > 1),
-        debounceTime(250),
-        tap(() => this.loading.emit(true)),
-        tap((text: string) => this.name.emit(text)),
-        map(() => this.auth.getUsers()),
-        switchAll()
-      ).subscribe(
-      (results: User[]) => {
-        console.log('results ', results);
-        this.loading.emit(false);
-        this.results.emit(results);
-      },
-      (err: any) => { // on error
-        console.log(err);
-        this.loading.emit(false);
-      },
-      () => { // on completion
-        this.loading.emit(false);
-      }
-    );
+  ngOnInit() {}
+
+  getUsers() {
+    this.loading.emit(true);
+    this.auth.getUsers()
+      .subscribe(
+        (users: User[]) => {
+          this.loading.emit(false);
+          this.results.emit(users);
+        });
+  }
+  submit(): void {
+    /*
+    // filter photos by albumId
+    this.router.navigate(['user'], { queryParams: { query: query } })
+      .then(() => {
+        this.getUsers();
+        this.name.emit(query);
+        }
+      );
+      */
+    this.getUsers();
+    this.name.emit(this.query);
+    console.log('query' + this.query);
   }
 
 }

@@ -63,7 +63,7 @@ export class ChatService {
       userName: name
     };
     this.chatMessages.push(this.chatMessage);
-    console.log('send message!');
+    console.log('send File!');
   }
 
 }

@@ -6,7 +6,9 @@
       </div>
       <div class="col-9 content">
         <p *ngIf="chatMessage.message !== ''">{{chatMessage.message}}</p>
-
+        <p *ngIf="chatMessage.file !== ''">
+          <iframe [src]="chatMessage.file" style="" width="100%"></iframe>
+        </p>
         <small>{{chatMessage.timeSent}}</small>
       </div>
     </div>

@@ -38,6 +38,7 @@ export class ChatFormComponent implements OnInit, DoCheck {
     const x = $('#emoji').val();
     this.message = x;
     if (this.message !== '') {
+      console.log(this.message, this.userName);
       this.chat.sendMessage(this.message, this.userName);
       this.form.reset();
       $('#emoji').val('');
@@ -46,10 +47,8 @@ export class ChatFormComponent implements OnInit, DoCheck {
   }
 
   uploadFile(event) {
-
     this.upload.pushUpload(event);
-   // $('.emojionearea-editor').text(this.fileURL);
- //   this.chat.uploadFile(this.fileURL, this.userName);
-
+    console.log(this.upload.downloadURL, this.userName);
+    this.chat.uploadFile(this.upload.downloadURL, this.userName);
   }
 }
